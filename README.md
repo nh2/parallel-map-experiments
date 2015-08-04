@@ -21,6 +21,6 @@ The `SparkSchedulingTest.hs` example demonstrates that sparks indeed have no thr
 
 Running the above with `ghc --make -O SparkSchedulingTest.hs -threaded && ./SparkSchedulingTest +RTS -N2` you can see two numbers appearing in the result list at a time.
 
-In addition, one can probably often simply use `parListChunk 128` or `parListChunk (2 * numCapabilities)` to make sure the number of sparks is reasonable.
+In addition, one can probably often simply use `parListChunk 128` or `parListChunk (2 * (min 1 $ length list `quot` numCapabilities)` to make sure the number of sparks is reasonable.
 
 In summary, it seems to me that it is a good idea to move to spark-based parallelism instead of `unsafePerformIO + MVar` based parallelism where possible for simple parallel maps.
